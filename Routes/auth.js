@@ -8,78 +8,6 @@ const middleware = require('../Helpers/auth-middleware').session;
 const upload = require('./multer')
 const cloudinary = require('./cloudinary')
 const fs = require('fs')
-
-// TO SEND VERIFICATION OTP
-router.post('/postotp', (request, response) => {
-    const otp = Math.floor(1000 + Math.random() * 9000);
-    Otp.findOneAndUpdate({
-        NUMBER: `${request.body.phoneNumber}`,
-    }, {
-        NUMBER: `${request.body.phoneNumber}`,
-        OTP: `${otp}`,
-        ISVERIFIED: false
-    }, {
-        upsert: true,
-        new: true,
-        setDefaultsOnInsert: true
-    }, (err) => {
-        if(err){
-            response.status(200).json({
-                err: 'There was some error sending OTP'
-            })
-        } else {
-            message(request.body.phoneNumber, `The OTP for verifying your phone number is ${otp}. \n\n Team EmpowerSHE`)
-                .then((res) => {
-                    response.status(200).json({
-                        message: 'OTP sent successfully.'
-                    })
-                })
-                .catch(err => {
-                    response.status(200).json({
-                        err: 'There was some error while sending OTP'
-                    })
-                })
-        }
-    })
-})
-
-// TO VERIFY PHONE NUMBER
-router.post('/verifyphone',  (request, response) => {
-    Otp.findOne({
-        NUMBER: request.body.phoneNumber
-    })
-        .then(doc => {
-             console.log(doc)
-            if(Number(doc.OTP) === Number(request.body.otp)){
-                Otp.findOneAndUpdate({
-                    NUMBER: request.body.phoneNumber
-                }, {
-                    ISVERIFIED: true
-                }, (err) => {
-                    if(err){
-                        response.status(200).json({
-                            err: 'There was some error while verifying your otp'
-                        })
-                    } else {
-                        response.status(200).json({
-                            message: 'Phone number verified successfully'
-                        })
-                    }
-                })
-            } else {
-                response.status(200).json({
-                    err: 'Failed to verify your phone number',
-                    wrongOtp: true
-                })
-            }
-        })
-        .catch(err => {
-            response.status(200).json({
-                err: 'There was some error while verifying your otp'
-            })
-        })
-})
-
 // TO SIGNUP USER
 router.post('/signup', upload.any('image'), async (request, response) => {
     console.log(request.body)
@@ -100,19 +28,8 @@ router.post('/signup', upload.any('image'), async (request, response) => {
             err: 'There was error validating your email id',
             validEmail: false
         });
-    } else {
-        Otp.findOne({NUMBER: request.body.phoneNumber}, (err, doc) => {
-            if(err){
-                response.status(200).json({
-                    err: 'There was some error while signing you up'
-                })
-            } else {
-                if(doc === null){
-                  response.status(200).json({
-                      phoneNumberNotVerified: true,
-                      err: 'Please verify your phone number first'
-                  })
-                } else if(doc.ISVERIFIED){
+    } 
+    else {
                     const profile = new User({
                         NAME: request.body.name,
                         EMAIL: request.body.email,
@@ -137,7 +54,7 @@ router.post('/signup', upload.any('image'), async (request, response) => {
                                 });
                             }
                         } else {
-                            message(request.body.phoneNumber, `Welcome to EmpowerSHE, ${request.body.name}, Thank you for joining us in this initiative.`)
+                            message(request.body.phoneNumber, `Welcome to women, ${request.body.name}, Thank you for joining us in this initiative.`)
                                 .then(res => {
                                     response.status(200).json({
                                         message: 'You were successfully signed up',
@@ -152,14 +69,6 @@ router.post('/signup', upload.any('image'), async (request, response) => {
                                 })
                         }
                     });
-                } else {
-                    response.status(200).json({
-                        phoneNumberNotVerified: true,
-                        err: 'Please verify your phone number first'
-                    })
-                }
-            }
-        })
     }
 })
 
@@ -205,9 +114,9 @@ router.post('/login', (request, response) => {
 });
 
 // TO DELETE ACCOUNT
-router.delete('/deleteaccount', (request, response) => {
+router.delete('/deleteaccount',middleware, (request, response) => {
     User.findOneAndRemove({EMAIL: request.decode.email})
-        // product and services
+        // product and services 
         .then(res => {
             response.status(200).json({
                 message: 'Your profile was successfully deleted'
@@ -219,6 +128,10 @@ router.delete('/deleteaccount', (request, response) => {
             })
         })
 })
+
+router.get('/contact',middleware, async (request, response) => {
+    response.json(request.User);
+  });
 
 // FORGOT PASSWORD
 router.post('/forgotpw', (request, response) => {
@@ -236,9 +149,6 @@ router.post('/forgotpw', (request, response) => {
                 err: 'No such user exist try signing up first',
             });
         } else {
-            const msgText = `Hello ${data.NAME}, as per your request your new password is ${password}`
-            message(data.PHONE_NUMBER, msgText)
-                .then(res => {
                     User.findOneAndUpdate({
                         EMAIL: request.body.email,
                     }, {
@@ -260,13 +170,6 @@ router.post('/forgotpw', (request, response) => {
                             });
                         }
                     });
-                })
-                .catch(err => {
-                    response.status(200).json({
-                        err: 'There was problem resetting your password, try again later',
-                        msgSent : false
-                    });
-                })
         }
     })
 })

@@ -8,7 +8,10 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         console.log(file)
-        cb(null, new Date().toISOString() + '-' + file.originalname)
+        const timestamp = Date.now();
+        const safeTimestamp = timestamp.toString(); // Convert to string
+        const safeFilename = `${safeTimestamp}-${file.originalname}`;
+        cb(null, safeFilename);
     }
 })
 

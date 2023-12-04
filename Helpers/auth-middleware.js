@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 module.exports.session = (request, response, next) => {
-    const token = request.get('Authorization');
+    const tok = request.get('Authorization');
+    token = tok.split(" ")[1];
     console.log(token)
     if (token) {
         jwt.verify(token, process.env.PW_SECRET, (error, decode) => {
@@ -13,7 +14,9 @@ module.exports.session = (request, response, next) => {
                 });
             } else {
                 request.decode = decode
+                request.User=decode.User
                 console.log(request.decode)
+                console.log("sucessful")
                 next()
             }
         });

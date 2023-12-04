@@ -25,7 +25,8 @@ app.use(bodyParser.json());
 
 // port declaration
 // const port = 3600;
-const port = 3000;
+// const port = process.env.PORT || 5005;
+const port = 5005;
 
 // open routes
 app.use("/", open);

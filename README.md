@@ -25,8 +25,6 @@
 
 
 
-### [Check out EmpowerSHE here!](https://risewithEmpowerSHE.netlify.app/)
-
 
 
 ## Project Creation
@@ -43,38 +41,16 @@
 1. Technical Stack Used: NodeJS, MongoDB, ExpressJS, JWT
 2. Editor Used: VS Code
 
-Link to frontend repo: https://github.com/TheCodeClutch/HackNagpur-EmpowerSHE
 
 ### 3rd Party API's
 
-1. OpenCage Geocoder API - Geolocation services used in SOS
-2. MeaningCloud  - Sentiment analysis of the questions/descriptions being posted on the portal
-3. MediaStack - EmpowerSHE in News API
-4. D7 Networks - Instant messaging service
-5. Cloudinary API - Products and Services image gallery
+1. MeaningCloud  - Sentiment analysis of the questions/descriptions being posted on the portal
+2. MediaStack - EmpowerSHE in News API
+3. D7 Networks - Instant messaging service
+4. Cloudinary API - Products and Services image gallery
 
 ### Deployment
 
 1. Database : Atlas MongoDB
-2. The Project is hosted on Netlify and is live at https://risewithEmpowerSHE.netlify.app/
-3. Backend Server is deployed using Heroku
+2. Backend Server is deployed using Heroku
 
-Demo Video: https://youtu.be/t1fvQQTLldQ
-
-## Project UI
-![Web-EmpowerSHE](https://github.com/TheCodeClutch/HackNagpur-EmpowerSHE/blob/master/images/Web-home.JPG)
-![PWA-EmpowerSHE](https://github.com/TheCodeClutch/HackNagpur-EmpowerSHE/blob/master/images/PWA-home.jpeg)
-
-## Contributors
-
-<table>
-  <tr>
-    <td align="center"><a href="http://github.com/saloni0104"><img src="https://github.com/TheCodeClutch/HackNagpur-EmpowerSHE/blob/master/images/saloni.PNG" width="200px;"  height="200px;" alt=""/><br /><sub><b>Saloni Parekh</b></sub></a><br />
-   </td>
-   </td>
-    <td align="center"><a href="http://github.com/nikhils4"><img src="https://avatars0.githubusercontent.com/u/30321610?s=400&u=0a8cd6fd05261868bef77b237b1a6532f12960ee&v=4" width="200px;" height="200px;" alt=""/><br /><sub><b>Nikhil Singh</b></sub></a><br />
-   </td>
-    <td align="center"><a href="http://github.com/mshreya9"><img src="https://github.com/TheCodeClutch/HackNagpur-EmpowerSHE/blob/master/images/shreya.jpg" width="200px;" height="200px;" alt=""/><br /><sub><b>Shreya Maheshwari</b></sub></a><br/>
-    </td>
-</tr>
-</table>
