@@ -32,7 +32,9 @@ const port = process.env.PORT || 8000;
 // const port = 5005;
 
 // open routes
-app.use("/", open);
+app.use("/", (request, response) => {
+  response.send("hello");
+})
 app.use("/auth", auth);
 app.use("/products", products);
 app.use("/services", services);

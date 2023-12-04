@@ -1,11 +1,19 @@
 {
     "version": 2,
-  "name":"backend",
     "builds": [
       {
         "src": "server.js",
         "use": "@vercel/node"
       }
+    ],
+    "routes": [
+      {
+        "src": "/auth/(.*)",
+        "dest": "/auth/index.js"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/index.js"
+      }
     ]
-   
   }
