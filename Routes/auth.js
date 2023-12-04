@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const jwt = require('jsonwebtoken');
-const message = require('../Helpers/messaging').message;
 const User = require('../Database/Models/model.js').user;
 const Otp = require('../Database/Models/model.js').otp;
 const helpers = require('../Helpers/helpers.js');
@@ -54,19 +53,10 @@ router.post('/signup', upload.any('image'), async (request, response) => {
                                 });
                             }
                         } else {
-                            message(request.body.phoneNumber, `Welcome to women, ${request.body.name}, Thank you for joining us in this initiative.`)
-                                .then(res => {
+                            
                                     response.status(200).json({
                                         message: 'You were successfully signed up',
-                                        msgSent : true
-                                    });
-                                })
-                                .catch(err => {
-                                    response.status(200).json({
-                                        message: 'You were successfully signed up',
-                                        msgSent : false
-                                    });
-                                })
+                                    })
                         }
                     });
     }
