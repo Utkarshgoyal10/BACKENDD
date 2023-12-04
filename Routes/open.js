@@ -2,9 +2,10 @@ const router = require("express").Router();
 const axios = require("axios");
 
 router.get( '/', (request, response) => {
-    response.status(200).json({
-        message : "This is the default route for the EmpowerSHE Project API, for women empowerment"
-    })
+  response.send("hello")
+    // response.status(200).json({
+    //     message : "This is the default route for the EmpowerSHE Project API, for women empowerment"
+    // })
 })
 
 router.get( '/team', (request, response) => {
